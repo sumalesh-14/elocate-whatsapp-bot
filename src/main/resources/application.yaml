@@ -52,7 +52,7 @@ telegram:
   api-url: https://api.telegram.org
 
 internal:
-  secret: ${INTERNAL_SECRET:elocate-internal-secret}
+  secret: ${INTERNAL_SECRET:elocate-internal-secret-change-in-prod}
 
 elocate:
   server:
