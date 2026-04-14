@@ -22,18 +22,24 @@ public class WhatsAppApiClient {
 
     private final WebClient webClient;
     private final String phoneNumberId;
+    private final boolean mockMode;
 
     public WhatsAppApiClient(
-            @Value("${whatsapp.token}") String token,
-            @Value("${whatsapp.phone-number-id}") String phoneNumberId,
+            @Value("${whatsapp.token:mock}") String token,
+            @Value("${whatsapp.phone-number-id:mock}") String phoneNumberId,
             @Value("${whatsapp.api-url:https://graph.facebook.com/v19.0}") String apiUrl) {
 
         this.phoneNumberId = phoneNumberId;
+        this.mockMode = "mock".equals(token) || "mock".equals(phoneNumberId);
         this.webClient = WebClient.builder()
                 .baseUrl(apiUrl)
                 .defaultHeader(HttpHeaders.AUTHORIZATION, "Bearer " + token)
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .build();
+
+        if (this.mockMode) {
+            log.warn("⚠️  WhatsApp API running in MOCK MODE — outgoing messages will be logged only, not sent to Meta.");
+        }
     }
 
     /** Send a plain text message */
@@ -143,6 +149,10 @@ public class WhatsAppApiClient {
     }
 
     private void post(Map<String, Object> body) {
+        if (mockMode) {
+            log.info("📤 [MOCK] WhatsApp outgoing message: {}", body);
+            return;
+        }
         try {
             String response = webClient.post()
                     .uri("/" + phoneNumberId + "/messages")

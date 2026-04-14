@@ -18,10 +18,9 @@ public class SecurityConfig {
         http
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
-                // Meta webhook calls must be public
                 .requestMatchers("/api/whatsapp/webhook").permitAll()
-                // Internal calls from elocate-server (protected by shared secret header)
                 .requestMatchers("/internal/**").permitAll()
+                .requestMatchers("/actuator/health").permitAll()
                 .anyRequest().denyAll()
             );
         return http.build();

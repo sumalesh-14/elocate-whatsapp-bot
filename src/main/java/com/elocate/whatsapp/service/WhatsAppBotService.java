@@ -126,9 +126,15 @@ public class WhatsAppBotService {
     }
 
     private void handleListNav(WhatsAppSession session, String input, boolean completed) {
-        // Check if this is a pickup action button (accept/reject/start)
+        // Pickup action buttons from proactive notifications
         if (input.startsWith("accept_pickup:") || input.startsWith("reject_pickup:") || input.startsWith("start_pickup:")) {
             handlePickupAction(session, input);
+            return;
+        }
+        // Main menu buttons — driver may tap these from any state
+        if (input.equals("menu_pending") || input.equals("menu_completed") || input.equals("menu_profile")) {
+            session.setState("MAIN_MENU");
+            handleMainMenu(session, input);
             return;
         }
         switch (input) {
