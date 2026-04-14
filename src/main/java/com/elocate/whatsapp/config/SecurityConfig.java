@@ -19,6 +19,7 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/api/whatsapp/webhook").permitAll()
+                .requestMatchers("/api/telegram/webhook").permitAll()
                 .requestMatchers("/internal/**").permitAll()
                 .requestMatchers("/actuator/health").permitAll()
                 .anyRequest().denyAll()

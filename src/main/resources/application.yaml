@@ -42,6 +42,12 @@ whatsapp:
   api-url: https://graph.facebook.com/v19.0
   use-template: ${WHATSAPP_USE_TEMPLATE:false}
 
+telegram:
+  bot:
+    token: ${TELEGRAM_BOT_TOKEN:mock}
+    username: ${TELEGRAM_BOT_USERNAME:elocate_driver_bot}
+  api-url: https://api.telegram.org
+
 internal:
   secret: ${INTERNAL_SECRET:elocate-internal-secret}
 
