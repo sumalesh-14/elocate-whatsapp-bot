@@ -29,6 +29,15 @@ spring:
 server:
   port: ${PORT:${SERVER_PORT:8081}}
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: never
+
 whatsapp:
   token: ${WHATSAPP_TOKEN}
   phone-number-id: ${WHATSAPP_PHONE_NUMBER_ID}
