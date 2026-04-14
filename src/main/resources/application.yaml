@@ -33,7 +33,7 @@ spring:
             required: true
 
 server:
-  port: ${SERVER_PORT:8081}
+  port: ${PORT:${SERVER_PORT:8081}}
 
 whatsapp:
   token: ${WHATSAPP_TOKEN}
