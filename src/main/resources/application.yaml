@@ -26,19 +26,6 @@ spring:
       exclude: static/**,public/**
     livereload:
       enabled: false
-  mail:
-    host: ${EMAIL_HOST:smtp-relay.brevo.com}
-    port: ${EMAIL_PORT:587}
-    username: ${EMAIL_USERNAME}
-    password: ${EMAIL_PASSWORD}
-    properties:
-      mail:
-        smtp:
-          auth: true
-          starttls:
-            enable: true
-            required: true
-
 server:
   port: ${PORT:${SERVER_PORT:8081}}
 
@@ -67,3 +54,7 @@ app:
     from: ${EMAIL_FROM:sumaleshka@gmail.com}
   otp:
     expiry-minutes: ${OTP_EXPIRY_MINUTES:10}
+
+brevo:
+  api:
+    key: ${BREVO_API_KEY}
