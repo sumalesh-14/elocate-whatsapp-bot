@@ -10,6 +10,7 @@ import lombok.Data;
 public class PickupAssignedNotificationRequest {
     private String requestNumber;       // e.g. EL-2024-00145
     private String requestId;           // UUID string
+    private String driverId;            // driver UUID — used to find Telegram session
     private String driverPhone;         // driver's WhatsApp number e.g. "919876543210"
     private String driverName;
     private String deviceName;          // e.g. "iPhone 14 Pro Max"

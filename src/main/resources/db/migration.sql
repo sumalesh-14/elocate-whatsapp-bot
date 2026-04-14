@@ -11,5 +11,6 @@ CREATE TABLE IF NOT EXISTS whatsapp_session (
     otp_expires_at         TIMESTAMP,
     list_offset            INT          NOT NULL DEFAULT 0,
     pending_action_request VARCHAR(50),
+    pending_action         VARCHAR(20),
     updated_at             TIMESTAMP    DEFAULT NOW()
 );

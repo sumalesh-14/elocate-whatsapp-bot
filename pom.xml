@@ -66,6 +66,14 @@
             <version>4.0.0</version>
         </dependency>
 
+        <!-- DevTools — auto-restart on class changes during development -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <scope>runtime</scope>
+            <optional>true</optional>
+        </dependency>
+
         <!-- HTTP client for Meta WhatsApp API and elocate-server calls -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

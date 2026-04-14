@@ -46,9 +46,13 @@ public class WhatsAppSession {
     @Column(name = "list_offset", nullable = false)
     private int listOffset = 0;
 
-    /** Holds the request number while waiting for driver to type a reject reason */
+    /** Holds the request number while waiting for driver to type a reject reason or accept remarks */
     @Column(name = "pending_action_request")
     private String pendingActionRequest;
+
+    /** Holds the pending action type: ACCEPT or REJECT */
+    @Column(name = "pending_action", length = 20)
+    private String pendingAction;
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;

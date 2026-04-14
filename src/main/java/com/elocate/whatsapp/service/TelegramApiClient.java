@@ -37,12 +37,12 @@ public class TelegramApiClient {
         }
     }
 
-    /** Send a plain text message. Supports Telegram MarkdownV2 formatting. */
+    /** Send a plain text message using HTML parse mode. */
     public void sendText(Long chatId, String text) {
         Map<String, Object> body = Map.of(
                 "chat_id", chatId,
                 "text", text,
-                "parse_mode", "Markdown"
+                "parse_mode", "HTML"
         );
         post("/sendMessage", body);
     }
@@ -50,7 +50,6 @@ public class TelegramApiClient {
     /**
      * Send a message with inline keyboard buttons.
      * Each button: Map.of("text", "Label", "callback_data", "btn_id")
-     * Buttons are laid out one per row for clarity on mobile.
      */
     public void sendButtons(Long chatId, String text, List<Map<String, String>> buttons) {
         List<List<Map<String, String>>> keyboard = buttons.stream()
@@ -63,7 +62,7 @@ public class TelegramApiClient {
         Map<String, Object> body = Map.of(
                 "chat_id", chatId,
                 "text", text,
-                "parse_mode", "Markdown",
+                "parse_mode", "HTML",
                 "reply_markup", Map.of("inline_keyboard", keyboard)
         );
         post("/sendMessage", body);
@@ -83,15 +82,22 @@ public class TelegramApiClient {
             return;
         }
         try {
+            log.info("📤 Telegram sending to {}: {}", path, body);
             String response = webClient.post()
                     .uri(path)
                     .bodyValue(body)
                     .retrieve()
+                    .onStatus(status -> status.is4xxClientError() || status.is5xxServerError(),
+                            clientResponse -> clientResponse.bodyToMono(String.class)
+                                    .map(errorBody -> {
+                                        log.error("❌ Telegram API error body: {}", errorBody);
+                                        return new RuntimeException("Telegram error: " + errorBody);
+                                    }))
                     .bodyToMono(String.class)
                     .block();
-            log.debug("Telegram API response for {}: {}", path, response);
+            log.debug("✅ Telegram response for {}: {}", path, response);
         } catch (Exception e) {
-            log.error("Telegram API call failed for {}: {}", path, e.getMessage());
+            log.error("❌ Telegram API call failed for {}: {}", path, e.getMessage());
         }
     }
 }
