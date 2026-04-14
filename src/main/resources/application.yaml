@@ -1,0 +1,56 @@
+spring:
+  application:
+    name: elocate-whatsapp-bot
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 3
+      minimum-idle: 0
+      idle-timeout: 10000
+      max-lifetime: 30000
+      connection-timeout: 30000
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  mail:
+    host: ${EMAIL_HOST:smtp-relay.brevo.com}
+    port: ${EMAIL_PORT:587}
+    username: ${EMAIL_USERNAME}
+    password: ${EMAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+
+server:
+  port: ${SERVER_PORT:8081}
+
+whatsapp:
+  token: ${WHATSAPP_TOKEN}
+  phone-number-id: ${WHATSAPP_PHONE_NUMBER_ID}
+  verify-token: ${WHATSAPP_VERIFY_TOKEN:elocate_whatsapp_verify_secret}
+  api-url: https://graph.facebook.com/v19.0
+  use-template: ${WHATSAPP_USE_TEMPLATE:false}
+
+internal:
+  secret: ${INTERNAL_SECRET:elocate-internal-secret}
+
+elocate:
+  server:
+    url: ${ELOCATE_SERVER_URL:http://localhost:8080}
+
+app:
+  email:
+    from: ${EMAIL_FROM:sumaleshka@gmail.com}
+  otp:
+    expiry-minutes: ${OTP_EXPIRY_MINUTES:10}
